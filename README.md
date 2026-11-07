@@ -1,39 +1,28 @@
 # Owl Mascot
 
-Interactive owl companion for web pages.
+Interactive owl companion that perches on page elements and tracks the cursor with a 3×3 sprite sheet.
 
-## What's included
-- Custom `OwlMascot` component (`src/owl-mascot.tsx`) with pose-based behavior
-- Owl pose assets in `public/owl/poses/`
-- 3×3 sprite sheets for page-mascot in `public/owl/mascots/`
-- `page-mascot` dependency
+## Run the demo
 
-## Quick start
 ```bash
 git clone https://github.com/michelesorrentino7-od/owl-mascot.git
 cd owl-mascot
 npm install
+npm run dev
 ```
 
-## Testing page-mascot
-Sprite sheets are ready:
-- `public/owl/mascots/owl-directions.webp`
-- `public/owl/mascots/owl-reactions.webp`
+Open the URL Vite prints (usually http://localhost:5173).
 
-See `src/PageMascotDemo.tsx` for a ready-to-use example:
+## How it works
 
-```tsx
-<Mascot
-  directions="/owl/mascots/owl-directions.webp"
-  reactions="/owl/mascots/owl-reactions.webp"
-  size={180}
-/>
-```
+- Drop `<OwlMascot />` once on the page.
+- Mark perch points with `data-seat` (optional `data-seat-edge="top|right|bottom"`).
+- While sitting, the owl uses the 3×3 directions sprite sheet (`public/owl/mascots/owl-directions.webp`) and follows the mouse angle.
+- When a seat scrolls away or it gets bored, it flies to the nearest visible seat.
 
-To run a local demo, add a simple Vite entry or import `PageMascotDemo` in your app.
+## Assets
 
-## Using the custom OwlMascot
-See `README-owl.md` for the existing pose-based component.
+- `public/owl/poses/` — individual flight / alert poses
+- `public/owl/mascots/` — 3×3 directions and reactions sheets
 
-## Aesthetic note
-The owl aesthetic is final — do not alter the visual style. Focus only on presence and interaction behavior.
+Aesthetic is final — do not change the visual style.
