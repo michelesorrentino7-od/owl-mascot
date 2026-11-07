@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Owl Mascot Demo</title>
+<style>
+body { margin: 0; background: #1a1a2e; color: white; font-family: system-ui; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; }
+#owl {
+  width: 200px;
+  height: 230px;
+  background-image: url(https://raw.githubusercontent.com/michelesorrentino7-od/owl-mascot/main/public/owl/mascots/owl-directions.webp);
+  background-size: 300% 300%;
+  background-position: 33.33% 33.33%;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  transition: background-position 0.15s;
+}
+p { margin-top: 20px; opacity: 0.7; }
+</style>
+</head>
+<body>
+<div id="owl"></div>
+<p>Move your mouse around the owl — click for a reaction</p>
+<script>
+const owl = document.getElementById('owl');
+const directions = 'https://raw.githubusercontent.com/michelesorrentino7-od/owl-mascot/main/public/owl/mascots/owl-directions.webp';
+const reactions = 'https://raw.githubusercontent.com/michelesorrentino7-od/owl-mascot/main/public/owl/mascots/owl-reactions.webp';
+
+document.addEventListener('mousemove', (e) => {
+  const rect = owl.getBoundingClientRect();
+  const cx = rect.left + rect.width / 2;
+  const cy = rect.top + rect.height / 2;
+  const dx = e.clientX - cx;
+  const dy = e.clientY - cy;
+  const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+  const deg = (angle + 360) % 360;
+  let col = 1, row = 1;
+  if (deg > 45 && deg < 135) col = 2;
+  else if (deg > 225 && deg < 315) col = 0;
+  if (deg > 135 && deg < 225) row = 2;
+  else if (deg < 45 || deg > 315) row = 0;
+  owl.style.backgroundImage = `url(${directions})`;
+  owl.style.backgroundPosition = `${col * 33.33}% ${row * 33.33}%`;
+});
+
+owl.addEventListener('click', () => {
+  const rCol = Math.floor(Math.random() * 3);
+  const rRow = Math.floor(Math.random() * 3);
+  owl.style.backgroundImage = `url(${reactions})`;
+  owl.style.backgroundPosition = `${rCol * 33.33}% ${rRow * 33.33}%`;
+  setTimeout(() => {
+    owl.style.backgroundImage = `url(${directions})`;
+    owl.style.backgroundPosition = '33.33% 33.33%';
+  }, 600);
+});
+</script>
+</body>
+</html>
