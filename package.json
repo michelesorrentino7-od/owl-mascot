@@ -1,0 +1,16 @@
+{
+  "name": "owl-mascot",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Interactive owl mascot using page-mascot",
+  "dependencies": {
+    "page-mascot": "latest",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.0",
+    "typescript": "^5.0.0",
+    "vite": "^5.0.0"
+  }
+}
