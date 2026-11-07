@@ -39,6 +39,7 @@ export function OwlMascot() {
   const rigRef = useRef<HTMLDivElement>(null);
   const shadowRef = useRef<HTMLDivElement>(null);
   const bubbleRef = useRef<HTMLDivElement>(null);
+  const sheetRef = useRef<HTMLDivElement>(null);
   const hop = useRef(() => {});
   const [pose, setPose] = useState<Pose>("perch");
   const [line, setLine] = useState<string | null>(null);
@@ -225,10 +226,29 @@ export function OwlMascot() {
             show("perch");
           }
         } else if (near) {
-          show(pointer.x < x - 16 ? "look-left" : pointer.x > x + 16 ? "look-right" : "perch");
+          const dx = pointer.x - x;
+          const dy = pointer.y - y;
+          const angle = Math.atan2(dy, dx);
+          const deg = (angle * 180 / Math.PI + 360) % 360;
+          let col = 1, row = 1;
+          if (deg > 45 && deg < 135) col = 2;
+          else if (deg > 225 && deg < 315) col = 0;
+          if (deg > 135 && deg < 225) row = 2;
+          else if (deg < 45 || deg > 315) row = 0;
+          const sheet = sheetRef.current;
+          if (sheet) {
+            sheet.style.backgroundPosition = `${col * 33.33}% ${row * 33.33}%`;
+            sheet.style.opacity = "1";
+          }
+          show("perch"); // keep flight images hidden
           boredAt = Math.max(boredAt, now + 7000);
-        } else if (current !== "perch") {
-          show("perch");
+        } else {
+          const sheet = sheetRef.current;
+          if (sheet) {
+            sheet.style.backgroundPosition = "33.33% 33.33%";
+            sheet.style.opacity = "1";
+          }
+          if (current !== "perch") show("perch");
         }
       }
 
@@ -273,7 +293,20 @@ export function OwlMascot() {
         className="absolute top-0 left-0 size-12 -translate-x-1/2 rounded-full bg-black/30 blur-md"
       />
       <div ref={rigRef} className="absolute top-0 left-0">
-        {POSES.map((name) => (
+        {/* Sprite-sheet directions (used while sitting) */}
+        <div
+          ref={sheetRef}
+          className="absolute inset-0"
+          style={{
+            backgroundImage: "url(/owl/mascots/owl-directions.webp)",
+            backgroundSize: "300% 300%",
+            backgroundRepeat: "no-repeat",
+            opacity: 1,
+            backgroundPosition: "33.33% 33.33%",
+          }}
+        />
+        {/* Flight / other poses still use individual images */}
+        {["alert", "takeoff", "flight", "landing"].map((name) => (
           <img
             key={name}
             src={`/owl/poses/${name}.png`}
