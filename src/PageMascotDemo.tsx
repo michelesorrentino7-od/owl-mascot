@@ -1,22 +1,19 @@
 import React from 'react';
 import { Mascot } from 'page-mascot';
 
-// Note: page-mascot requires 3x3 sprite sheets for directions and reactions.
-// The existing owl poses are individual images. To use with page-mascot,
-// create aligned sprite sheets from the owl poses (or use the skill to generate).
-
 export function PageMascotDemo() {
   return (
-    <div style={{ padding: 40 }}>
-      <h1>page-mascot test (needs sprite sheets)</h1>
-      <p>To fully test, provide directions and reactions webp sheets.</p>
-      {/* 
-      <Mascot
-        directions="/owl/owl-directions.webp"
-        reactions="/owl/owl-reactions.webp"
-        size={160}
-      />
-      */}
+    <div style={{ minHeight: '100vh', padding: 40, fontFamily: 'system-ui' }}>
+      <h1>Owl + page-mascot test</h1>
+      <p>Move your cursor — the owl head should track the pointer angle. Click it for a reaction.</p>
+      <div style={{ marginTop: 40, display: 'flex', justifyContent: 'center' }}>
+        <Mascot
+          directions="/owl/mascots/owl-directions.webp"
+          reactions="/owl/mascots/owl-reactions.webp"
+          size={180}
+          label="owl mascot"
+        />
+      </div>
     </div>
   );
 }
